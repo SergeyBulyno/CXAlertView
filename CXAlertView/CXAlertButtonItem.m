@@ -26,8 +26,8 @@
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextClearRect(context, self.bounds);
         
-        CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:0.671 green:0.675 blue:0.694 alpha:1.000].CGColor);
-        CGContextSetLineWidth(context, 1.0);
+        CGContextSetStrokeColorWithColor(context, self.rightLineColor.CGColor);
+        CGContextSetLineWidth(context, [UIScreen mainScreen].scale == 2. ? 1.0 : 2.0);
         CGContextMoveToPoint(context, CGRectGetWidth(self.frame),0);
         CGContextAddLineToPoint(context, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
         CGContextStrokePath(context);

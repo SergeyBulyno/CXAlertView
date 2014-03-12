@@ -101,6 +101,7 @@ static CXAlertView *__cx_alert_current_view;
 - (void)buttonAction:(CXAlertButtonItem *)buttonItem;
 - (void)setButtonImage:(UIImage *)image forState:(UIControlState)state andButtonType:(CXAlertViewButtonType)type;
 - (void)updateAllButtonsFont;
+- (void)updateSeparators;
 
 // Blur
 - (void)updateBlurBackground;
@@ -125,6 +126,7 @@ static CXAlertView *__cx_alert_current_view;
         appearance.cancelButtonFont = [UIFont boldSystemFontOfSize:18.];
         appearance.customButtonColor = [UIColor colorWithRed:0.075f green:0.6f blue:0.9f alpha:1.0f];
         appearance.customButtonFont = [UIFont systemFontOfSize:18.];
+		appearance.separatorColor = [UIColor colorWithRed:0.671 green:0.675 blue:0.694 alpha:1.000];
         appearance.cornerRadius = 8;
         appearance.shadowRadius = 8;
     });
@@ -501,6 +503,7 @@ static CXAlertView *__cx_alert_current_view;
 
     if (!_bottomScrollView) {
         _bottomScrollView = [[CXAlertButtonContainerView alloc] init];
+		_bottomScrollView.topLineColor = _separatorColor;
         _bottomScrollView.defaultTopLineVisible = _showButtonLine;
     }
 }
@@ -772,7 +775,6 @@ static CXAlertView *__cx_alert_current_view;
     button.title = title;
     button.action = handler;
     button.type = type;
-    button.defaultRightLineVisible = _showButtonLine;
     [button setTitle:title forState:UIControlStateNormal];
 
 	button.titleLabel.textAlignment=UITextAlignmentCenter;
@@ -783,9 +785,7 @@ static CXAlertView *__cx_alert_current_view;
 
     if ([_buttons count] == 0)
 	{
-		button.defaultRightLineVisible = NO;
 		button.frame = CGRectMake( self.containerWidth/4, 0, self.containerWidth/2, self.buttonHeight);
-
 		[_buttons addObject:button];
 		[self setMaxSizeForAllButtons];
 	}
@@ -824,6 +824,8 @@ static CXAlertView *__cx_alert_current_view;
 
 	CGFloat newContentWidth = self.bottomScrollView.contentSize.width + CGRectGetWidth(button.frame);
 	_bottomScrollView.contentSize = CGSizeMake( newContentWidth, _bottomScrollView.contentSize.height);
+
+	[self updateSeparators];
 }
 
 - (CXAlertButtonItem *)buttonItemWithType:(CXAlertViewButtonType)type font:(UIFont *)font
@@ -831,6 +833,7 @@ static CXAlertView *__cx_alert_current_view;
 	CXAlertButtonItem *button = [CXAlertButtonItem buttonWithType:UIButtonTypeCustom];
 //	button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     button.titleLabel.font = font;
+	button.rightLineColor = _separatorColor;
 	UIImage *normalImage = nil;
 	UIImage *highlightedImage = nil;
 	switch (type) {
@@ -896,6 +899,16 @@ static CXAlertView *__cx_alert_current_view;
     }
 }
 
+- (void)updateSeparators
+{
+	_bottomScrollView.topLineColor = _separatorColor;
+	_bottomScrollView.defaultTopLineVisible = _showButtonLine;
+	for (CXAlertButtonItem *buttonItem in _buttons) {
+		buttonItem.rightLineColor = _separatorColor;
+		buttonItem.defaultRightLineVisible = _showButtonLine && (buttonItem != _buttons.lastObject);
+	}
+}
+
 - (void)updateBlurBackground
 {
     UIColor *containerBKGColor = _viewBackgroundColor ? _viewBackgroundColor : [UIColor whiteColor];
@@ -916,6 +929,7 @@ static CXAlertView *__cx_alert_current_view;
         [self.blurView removeFromSuperview];
     }
 }
+
 #pragma mark - Setter
 - (void)setTitle:(NSString *)title
 {
@@ -1063,4 +1077,13 @@ static CXAlertView *__cx_alert_current_view;
     _showBlurBackground = showBlurBackground;
     [self updateBlurBackground];
 }
+
+- (void)setSeparatorColor:(UIColor *)separatorColor {
+	if (_separatorColor == separatorColor) {
+		return;
+	}
+	_separatorColor = separatorColor;
+	[self updateSeparators];
+}
+
 @end

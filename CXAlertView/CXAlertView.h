@@ -35,6 +35,7 @@ typedef void(^CXAlertViewHandler)(CXAlertView *alertView);
 @property (nonatomic, strong) UIFont *customButtonFont NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR; // default [UIFont systemFontOfSize:18.]
 @property (nonatomic, assign) CGFloat cornerRadius NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR; // default is 8.0
 @property (nonatomic, assign) CGFloat shadowRadius NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR; // default is 8.0
+@property (nonatomic, strong) UIColor *separatorColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR; // default [UIColor colorWithRed:0.671 green:0.675 blue:0.694 alpha:1.000]
 
 @property (nonatomic, assign) CGFloat scrollViewPadding;
 @property (nonatomic, assign) CGFloat buttonHeight;

@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) NSMutableArray *buttons;
 @property (nonatomic) BOOL defaultTopLineVisible;
+@property (nonatomic, strong) UIColor *topLineColor;
+
 
 - (void)addButtonWithTitle:(NSString *)title type:(CXAlertViewButtonType)type handler:(CXAlertButtonHandler)handler;
 
