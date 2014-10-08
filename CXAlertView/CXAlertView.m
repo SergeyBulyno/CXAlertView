@@ -23,6 +23,23 @@
 
 #import "LFGlassView.h"
 
+
+@implementation UIScreen (AdoptedSize)
+
+- (CGSize)adoptedSize {
+    CGSize rawSize = [[UIScreen mainScreen] bounds].size;
+    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+        return CGSizeMake(MAX(rawSize.width, rawSize.height), MIN(rawSize.width, rawSize.height));
+    }
+    return CGSizeMake(MIN(rawSize.width, rawSize.height), MAX(rawSize.width, rawSize.height));
+}
+
+@end
+
+
+
+
+
 static CGFloat const kDefaultScrollViewPadding = 10.;
 static CGFloat const kDefaultButtonHeight = 44.;
 static CGFloat const kDefaultContainerWidth = 280.;
@@ -266,7 +283,8 @@ static CXAlertView *__cx_alert_current_view;
     }
 
     if (!self.alertWindow) {
-        UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        CGSize adoptedSize = [[UIScreen mainScreen] adoptedSize];
+        UIWindow *window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, adoptedSize.width, adoptedSize.height)];
         window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         window.opaque = NO;
         window.windowLevel = UIWindowLevelAlert;
