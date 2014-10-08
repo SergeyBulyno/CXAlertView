@@ -52,18 +52,26 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskAll;
+    return self.alertView.supportedInterfaceOrientations;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    return YES;
+    return (self.alertView.supportedInterfaceOrientations & toInterfaceOrientation);
 }
 
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    NSDictionary *map = @{@(UIDeviceOrientationPortrait): @(UIInterfaceOrientationPortrait),
+                          @(UIDeviceOrientationPortraitUpsideDown): @(UIInterfaceOrientationPortraitUpsideDown),
+                          @(UIDeviceOrientationLandscapeLeft): @(UIInterfaceOrientationLandscapeLeft),
+                          @(UIDeviceOrientationLandscapeRight): @(UIInterfaceOrientationLandscapeRight)};
+
+    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+    NSNumber *orientation = map[@(deviceOrientation)];
+    return (orientation ? (self.alertView.supportedInterfaceOrientations & [orientation unsignedIntegerValue]) : YES);
 }
+
 - (BOOL)prefersStatusBarHidden
 {
     return _rootViewControllerPrefersStatusBarHidden;

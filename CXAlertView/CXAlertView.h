@@ -13,6 +13,8 @@
 typedef void(^CXAlertViewHandler)(CXAlertView *alertView);
 @interface CXAlertView : UIView
 
+@property (assign, nonatomic) NSUInteger supportedInterfaceOrientations;
+
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) UIView *contentView;
 @property (nonatomic, strong, readonly) NSMutableArray *buttons;

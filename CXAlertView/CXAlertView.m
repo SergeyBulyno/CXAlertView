@@ -137,6 +137,7 @@ static CXAlertView *__cx_alert_current_view;
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
     }
     return self;
 }
