@@ -365,7 +365,8 @@ static CXAlertView *__cx_alert_current_view;
 + (void)showBackground
 {
     if (!__cx_alert_background_window) {
-        __cx_alert_background_window = [[CXAlertBackgroundWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        CGSize adoptedSize = [[UIScreen mainScreen] adoptedSize];
+        __cx_alert_background_window = [[CXAlertBackgroundWindow alloc] initWithFrame:CGRectMake(0, 0, adoptedSize.width, adoptedSize.height)];
 
         [__cx_alert_background_window makeKeyAndVisible];
         __cx_alert_background_window.alpha = 0;
