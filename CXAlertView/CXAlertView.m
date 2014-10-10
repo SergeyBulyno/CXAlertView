@@ -290,8 +290,7 @@ static CXAlertView *__cx_alert_current_view;
     }
 
     if (!self.alertWindow) {
-        CGSize adoptedSize = [[UIScreen mainScreen] adoptedSize];
-        UIWindow *window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, adoptedSize.width, adoptedSize.height)];
+        UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
         window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         window.opaque = NO;
         window.windowLevel = UIWindowLevelAlert;
