@@ -57,15 +57,20 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    return (self.alertView.supportedInterfaceOrientations & toInterfaceOrientation);
+    NSDictionary *map = @{@(UIInterfaceOrientationPortrait): @(UIInterfaceOrientationMaskPortrait),
+                          @(UIInterfaceOrientationPortraitUpsideDown): @(UIInterfaceOrientationMaskPortraitUpsideDown),
+                          @(UIInterfaceOrientationLandscapeLeft): @(UIInterfaceOrientationMaskLandscapeLeft),
+                          @(UIInterfaceOrientationLandscapeRight): @(UIInterfaceOrientationMaskLandscapeRight)};
+    NSNumber *orientation = map[@(toInterfaceOrientation)];
+    return (orientation ? (self.alertView.supportedInterfaceOrientations & [orientation unsignedIntegerValue]) : YES);
 }
 
 - (BOOL)shouldAutorotate
 {
-    NSDictionary *map = @{@(UIDeviceOrientationPortrait): @(UIInterfaceOrientationPortrait),
-                          @(UIDeviceOrientationPortraitUpsideDown): @(UIInterfaceOrientationPortraitUpsideDown),
-                          @(UIDeviceOrientationLandscapeLeft): @(UIInterfaceOrientationLandscapeLeft),
-                          @(UIDeviceOrientationLandscapeRight): @(UIInterfaceOrientationLandscapeRight)};
+    NSDictionary *map = @{@(UIDeviceOrientationPortrait): @(UIInterfaceOrientationMaskPortrait),
+                          @(UIDeviceOrientationPortraitUpsideDown): @(UIInterfaceOrientationMaskPortraitUpsideDown),
+                          @(UIDeviceOrientationLandscapeLeft): @(UIInterfaceOrientationMaskLandscapeLeft),
+                          @(UIDeviceOrientationLandscapeRight): @(UIInterfaceOrientationMaskLandscapeRight)};
 
     UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
     NSNumber *orientation = map[@(deviceOrientation)];

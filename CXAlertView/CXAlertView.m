@@ -27,17 +27,18 @@
 @implementation UIScreen (AdoptedSize)
 
 - (CGSize)adoptedSize {
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0 && UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
-        return CGSizeMake(screenSize.height, screenSize.width);
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        CGSize nativeSize = [UIScreen mainScreen].nativeBounds.size;
+        CGFloat scale = [UIScreen mainScreen].scale;
+        return CGSizeMake(nativeSize.width / scale, nativeSize.height / scale);
     }
-    return screenSize;
-//    CGSize rawSize = [[UIScreen mainScreen] bounds].size;
-//    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
-//        return CGSizeMake(MAX(rawSize.width, rawSize.height), MIN(rawSize.width, rawSize.height));
+    return [UIScreen mainScreen].bounds.size;
+
+//    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+//    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0 && UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+//        return CGSizeMake(screenSize.height, screenSize.width);
 //    }
-//    return CGSizeMake(MIN(rawSize.width, rawSize.height), MAX(rawSize.width, rawSize.height));
+//    return screenSize;
 }
 
 @end

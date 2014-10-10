@@ -13,7 +13,7 @@
 typedef void(^CXAlertViewHandler)(CXAlertView *alertView);
 @interface CXAlertView : UIView
 
-@property (assign, nonatomic) NSUInteger supportedInterfaceOrientations;
+@property (assign, nonatomic) NSUInteger supportedInterfaceOrientations; // Use UIInterfaceOrientationMask constatnts
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) UIView *contentView;
