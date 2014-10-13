@@ -144,6 +144,8 @@ static CXAlertView *__cx_alert_current_view;
         appearance.viewBackgroundColor = [UIColor whiteColor];
         appearance.titleColor = [UIColor blackColor];
         appearance.titleFont = [UIFont boldSystemFontOfSize:20];
+        appearance.messageColor = [UIColor blackColor];
+        appearance.messageFont = [UIFont systemFontOfSize:14.0];
         appearance.buttonFont = [UIFont systemFontOfSize:[UIFont buttonFontSize]];
         appearance.buttonColor = [UIColor colorWithRed:0.0f green:0.5f blue:1.0f alpha:1.0f];
         appearance.cancelButtonColor = [UIColor colorWithRed:0.0f green:0.5f blue:1.0f alpha:1.0f];
@@ -181,8 +183,8 @@ static CXAlertView *__cx_alert_current_view;
     UILabel *messageLabel = [[UILabel alloc] init];
     messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.backgroundColor = [UIColor clearColor];
-    messageLabel.font = [UIFont systemFontOfSize:14.0];
-    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.font = _messageFont;
+    messageLabel.textColor = _messageColor;
     messageLabel.numberOfLines = 0;
     messageLabel.text = message;
     messageLabel.frame = CGRectMake( self.vericalPadding, 0, self.containerWidth - self.vericalPadding*2, [self heightWithText:message font:messageLabel.font]);
@@ -935,6 +937,18 @@ static CXAlertView *__cx_alert_current_view;
 	}
 }
 
+- (void)updateMessageFont {
+    if (self.contentView && [self.contentView isKindOfClass:[UILabel class]]) {
+        [(UILabel *)self.contentView setFont:_messageFont];
+    }
+}
+
+- (void)updateMessageColor {
+    if (self.contentView && [self.contentView isKindOfClass:[UILabel class]]) {
+        [(UILabel *)self.contentView setTextColor:_messageColor];
+    }
+}
+
 - (void)updateBlurBackground
 {
     UIColor *containerBKGColor = _viewBackgroundColor ? _viewBackgroundColor : [UIColor whiteColor];
@@ -1110,6 +1124,22 @@ static CXAlertView *__cx_alert_current_view;
 	}
 	_separatorColor = separatorColor;
 	[self updateSeparators];
+}
+
+- (void)setMessageColor:(UIColor *)messageColor {
+    if (_messageColor == messageColor) {
+        return;
+    }
+    _messageColor = messageColor;
+    [self updateMessageColor];
+}
+
+- (void)setMessageFont:(UIFont *)messageFont {
+    if (_messageFont == messageFont) {
+        return;
+    }
+    _messageFont = messageFont;
+    [self updateMessageFont];
 }
 
 @end
