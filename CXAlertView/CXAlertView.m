@@ -28,7 +28,7 @@
 
 - (CGSize)adoptedSize {
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        CGSize nativeSize = [UIScreen mainScreen].nativeBounds.size;
+        CGSize nativeSize = [UIScreen mainScreen].preferredMode.size;
         CGFloat scale = [UIScreen mainScreen].scale;
         return CGSizeMake(nativeSize.width / scale, nativeSize.height / scale);
     }
