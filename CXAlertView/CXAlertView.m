@@ -28,17 +28,16 @@
 
 - (CGSize)adoptedSize {
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        CGSize nativeSize = [UIScreen mainScreen].preferredMode.size;
+        CGSize size = CGSizeZero;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            size = [UIScreen mainScreen].nativeBounds.size;
+        } else {
+            size = [UIScreen mainScreen].preferredMode.size;
+        }
         CGFloat scale = [UIScreen mainScreen].scale;
-        return CGSizeMake(nativeSize.width / scale, nativeSize.height / scale);
+        return CGSizeMake(size.width / scale, size.height / scale);
     }
     return [UIScreen mainScreen].bounds.size;
-
-//    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-//    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0 && UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
-//        return CGSizeMake(screenSize.height, screenSize.width);
-//    }
-//    return screenSize;
 }
 
 @end
