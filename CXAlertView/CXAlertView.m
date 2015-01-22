@@ -590,9 +590,10 @@ static CXAlertView *__cx_alert_current_view;
 
         [_contentScrollView addSubview:_contentView];
 
-        CGFloat y = 0;
-        y += [self heightForTopScrollView] + self.scrollViewPadding;
-
+        CGFloat y = [self heightForTopScrollView];
+        if (self.title) {
+            y += self.scrollViewPadding;
+        }
         y += self.scrollViewPadding;
 
         _contentScrollView.frame = CGRectMake( 0, y, self.containerWidth, [self heightForContentScrollView]);
