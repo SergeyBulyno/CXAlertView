@@ -375,6 +375,13 @@ static CXAlertView *__cx_alert_current_view;
         CGSize adoptedSize = [[UIScreen mainScreen] adoptedSize];
         __cx_alert_background_window = [[CXAlertBackgroundWindow alloc] initWithFrame:CGRectMake(0, 0, adoptedSize.width, adoptedSize.height)];
 
+        if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.3 && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            CGAffineTransform transform = CGAffineTransformIdentity;
+            transform = CGAffineTransformScale(transform, -1.0f, 1.0f);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            __cx_alert_background_window.transform = transform;
+        }
+
         [__cx_alert_background_window makeKeyAndVisible];
         __cx_alert_background_window.alpha = 0;
         [UIView animateWithDuration:0.3
