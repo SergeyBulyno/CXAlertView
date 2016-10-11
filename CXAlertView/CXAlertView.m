@@ -383,7 +383,8 @@ static CXAlertView *__cx_alert_current_view;
 		}
 
 		__cx_alert_background_window = [[CXAlertBackgroundWindow alloc] initWithFrame:backgroundFrame];
-
+		__cx_alert_background_window.rootViewController = [[UIViewController alloc] init];
+		
 		[__cx_alert_background_window makeKeyAndVisible];
 		__cx_alert_background_window.alpha = 0;
 		[UIView animateWithDuration:0.3
